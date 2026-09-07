@@ -1,0 +1,30 @@
+runtime: node
+env: standard
+instance_class: F1
+
+env_variables:
+  NODE_ENV: "production"
+  PAYPAL_ENV: "live"
+
+env_vars:
+  PAYPAL_CLIENT_ID:
+    source: secret-manager
+    key: paypal-client-id
+  PAYPAL_CLIENT_SECRET:
+    source: secret-manager
+    key: paypal-client-secret
+  DOWNLOAD_SECRET:
+    source: secret-manager
+    key: download-secret
+
+handlers:
+- url: /.*
+  script: auto
+
+automatic_scaling:
+  min_instances: 1
+  max_instances: 10
+
+inbound_services:
+- mail
+- mail_bounce
